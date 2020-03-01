@@ -12,12 +12,13 @@ const download = require('gulp-download2');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
+var argv = require('yargs').argv;
 
 
 /* -------------------------------------------------------------------------------------------------
 Theme Name
 -------------------------------------------------------------------------------------------------- */
-const themeName = 'atomic-wp';
+const themeName = 'puang-wisata';
 
 /* -------------------------------------------------------------------------------------------------
 SCSS Plugin
@@ -80,6 +81,14 @@ function devServer() {
 			});
 		},
   );
+
+  watch('./src/theme/frontend/**/*.scss', stylesDev);
+  watch('./src/theme/**', series(copyThemeDev, Reload));
+}
+
+function Reload(done) {
+	browserSync.reload();
+	done();
 }
 
 function copyThemeDev() {
@@ -111,6 +120,32 @@ exports.dev = series(
   stylesDev, 
   devServer
 );
+
+/* -------------------------------------------------------------------------------------------------
+Atomic Operation
+-------------------------------------------------------------------------------------------------- */
+function createAtomic(){
+  
+  if(argv.filename !== undefined && argv.type !== undefined){
+    
+    let { type, filename } = argv;
+
+    console.log('type', type);
+
+    // Check If Atomic Component is Exist
+    if( fs.existsSync(`./src/theme/frontend/components/${type}s/${filename}`) ) return true;
+
+    let makedir         = fs.mkdir(`./src/theme/frontend/components/${type}s/${filename}`, {recursive: true}, err => console.log(err) );
+    let makeStyle       = fs.writeFileSync(`./src/theme/frontend/components/${type}s/${filename}/_${filename}.scss`, '', Reload);
+    let makePHP         = fs.writeFileSync(`./src/theme/frontend/components/${type}s/${filename}/_${filename}.php`, '', Reload);
+    let updateCompStyle = fs.appendFile(`./src/theme/frontend/components/${type}s/_styles.scss`, `\r\n@import './${filename}/${filename}';`, err => console.log(err))
+    
+    return Promise.all([makedir, makeStyle, makePHP, updateCompStyle]);
+
+  }
+}
+
+exports.createAtomic = createAtomic;
 
 /* -------------------------------------------------------------------------------------------------
 Utility Tasks

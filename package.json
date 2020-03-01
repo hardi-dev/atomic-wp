@@ -7,6 +7,10 @@
   "license": "MIT",
   "scripts": {
     "install:wp": "gulp setup && gulp install",
+    "atomic:a": "gulp createAtomic --type atom --filename",
+    "atomic:m": "gulp createAtomic --type molecule --filename",
+    "atomic:o": "gulp createAtomic --type organism --filename",
+    "atomic:t": "gulp createAtomic --type template --filename",
     "dev": "gulp dev"
   },
   "devDependencies": {
@@ -25,6 +29,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3.0.8",
-    "gulp-vinyl-zip": "^2.2.0"
+    "gulp-vinyl-zip": "^2.2.0",
+    "yargs": "^15.2.0"
   }
 }
