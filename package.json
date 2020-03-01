@@ -1,0 +1,30 @@
+{
+  "name": "atomic-wp",
+  "version": "1.0.0",
+  "description": "Wordpress Theme Starterkit with Atomic Design System",
+  "main": "gulpfile.js",
+  "author": "Hardiansa",
+  "license": "MIT",
+  "scripts": {
+    "install:wp": "gulp setup && gulp install",
+    "dev": "gulp dev"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "browser-sync": "^2.26.7",
+    "del": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect-php": "^1.0.3",
+    "gulp-download2": "^1.0.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-remote-src": "^0.4.4",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-util": "^3.0.8",
+    "gulp-vinyl-zip": "^2.2.0"
+  }
+}
