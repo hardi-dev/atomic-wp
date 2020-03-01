@@ -1,7 +1,7 @@
 /*
-Theme Name: Atomic WP
-Theme URI: http://atomic-wp.com
-Description: Atomic WP Startup Theme
+Theme Name: Puang Wisata
+Theme URI: http://puang-wisata.com
+Description: Puang Wisata Website Theme
 Author: Hardiansa
 Author URI: http://www.hardi.dev
 Version: 1.0
@@ -30,3 +30,7 @@ Utils
 Atoms
 -------------------------------------------------------------------------------------------------- */
 @import './../../components/atoms/styles';
+
+body {
+  background: yellow;
+}

@@ -1,0 +1,8 @@
+@function spacing($key) {
+  @if map-has-key($space, $key) {
+      @return map-get($space, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $colors.";
+  @return null;
+}
