@@ -6,7 +6,8 @@
   "author": "Hardiansa",
   "license": "MIT",
   "scripts": {
-    "install:wp": "gulp setup && gulp install",
+    "wp:install": "gulp setup && gulp install",
+    "wp:template": "gulp createPageTemplate",
     "atomic:a": "gulp createAtomic --type atom --filename",
     "atomic:m": "gulp createAtomic --type molecule --filename",
     "atomic:o": "gulp createAtomic --type organism --filename",
@@ -30,6 +31,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3.0.8",
     "gulp-vinyl-zip": "^2.2.0",
+    "plugin-error": "^1.0.1",
     "reset-css": "^5.0.1",
     "yargs": "^15.2.0"
   }

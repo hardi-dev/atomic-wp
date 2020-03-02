@@ -13,12 +13,13 @@ const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 var argv = require('yargs').argv;
+var PluginError = require('plugin-error');
 
 
 /* -------------------------------------------------------------------------------------------------
 Theme Name
 -------------------------------------------------------------------------------------------------- */
-const themeName = 'puang-wisata';
+const themeName = 'atomic-wp';
 
 /* -------------------------------------------------------------------------------------------------
 SCSS Plugin
@@ -98,7 +99,7 @@ function copyThemeDev() {
 		process.exit(1);
 	} else {
 		return src(
-      ['./src/theme/**', '!./src/theme/**/*.scss']).pipe(dest('./build/wordpress/wp-content/themes/' + themeName));
+      ['./src/theme/**', '!./src/theme/**/*.scss', '!./src/theme/page-templates/page-template.example.php']).pipe(dest('./build/wordpress/wp-content/themes/' + themeName));
 	}
 }
 
@@ -143,7 +144,45 @@ function createAtomic(){
   }
 }
 
+function createPageTemplate(){
+  
+  let { filename, templateName } = argv;
+
+  if( !fs.existsSync(`./src/theme/page-templates`) ) throw new PluginError('Exmple File', 'Example File Not Found', errorPlugInOptions );
+
+  if( filename == undefined ) throw new PluginError('File Name Name', 'Please enter filename (e.g: --filename two-columns)', errorPlugInOptions );
+
+  if( templateName == undefined ) throw new PluginError('Template Name', 'Please enter Template Name (e.g: --templateName "Two Columns")', errorPlugInOptions );
+
+
+  let copyFile = fs.copyFileSync( './src/theme/page-templates/page-template.example.php', `./src/theme/page-templates/${filename}.php`, (err) => {
+      
+    if (err) throw new PluginError('Read File', err.message, errorPlugInOptions );
+    
+  });
+
+
+  let readFile = fs.readFileSync(`./src/theme/page-templates/${filename}.php`, 'utf8', (err, data) => {
+    
+    if (err) throw new PluginError('Reading File', err.message, errorPlugInOptions);
+
+    return data;
+
+  });
+
+
+  let writeFile = fs.writeFileSync(`./src/theme/page-templates/${filename}.php`, readFile.replace('Page Template Example', templateName), err => {
+    
+    if (err) throw new PluginError('Writing File', err.message, errorPlugInOptions);
+  
+  });
+
+  return Promise.all([copyFile, writeFile]);
+
+}
+
 exports.createAtomic = createAtomic;
+exports.createPageTemplate = createPageTemplate;
 
 
 /* -------------------------------------------------------------------------------------------------
@@ -179,4 +218,10 @@ const backupsGenerated =
 const wpFy = '\x1b[42m\x1b[1matomic-wp\x1b[0m';
 const wpFyUrl = '\x1b[2m - http://www.atomic-wp.co/\x1b[0m';
 const thankYou = 'Thank you for using ' + wpFy + wpFyUrl;
+
+
+
+
+
+const errorPlugInOptions = { showStack: false, showProperties: false  }
 
