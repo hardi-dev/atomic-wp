@@ -30,6 +30,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-util": "^3.0.8",
     "gulp-vinyl-zip": "^2.2.0",
+    "reset-css": "^5.0.1",
     "yargs": "^15.2.0"
   }
 }
